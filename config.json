@@ -1,0 +1,58 @@
+{
+  "system_name": "文件内容分析专家系统",
+  "version": "1.0.0",
+  "description": "基于三份RoboMaster规则文档的专业分析工具",
+  
+  "documents": [
+    {
+      "id": "doc1",
+      "name": "机器人制作规范手册",
+      "filename": "RoboMaster 2026 机甲大师高校系列赛机器人制作规范手册V1.0.0（20251021）.pdf",
+      "version": "V1.0.0",
+      "date": "20251021",
+      "description": "机器人制作规范和技术要求"
+    },
+    {
+      "id": "doc2",
+      "name": "比赛规则手册",
+      "filename": "RoboMaster 2026 机甲大师高校联盟赛比赛规则手册 V1.1.0（20251208）.pdf",
+      "version": "V1.1.0",
+      "date": "20251208",
+      "description": "比赛规则和竞赛流程"
+    },
+    {
+      "id": "doc3",
+      "name": "电池安全规范",
+      "filename": "RoboMaster电池安全规范.pdf",
+      "version": "N/A",
+      "date": "N/A",
+      "description": "电池使用和安全规范"
+    }
+  ],
+  
+  "core_principles": {
+    "strict_adherence": "所有回答必须完全且仅基于提供的文件内容",
+    "zero_speculation": "禁止对文件未明确提及的内容进行任何推断",
+    "completeness": "回答应全面覆盖问题所涉的所有文件相关内容",
+    "objectivity": "保持绝对客观，不掺杂个人观点"
+  },
+  
+  "search_settings": {
+    "default_context_chars": 100,
+    "max_results_display": 5,
+    "case_sensitive": false
+  },
+  
+  "answer_format": {
+    "include_direct_answer": true,
+    "include_detailed_evidence": true,
+    "include_supplementary_info": true,
+    "include_source_citations": true,
+    "max_evidence_per_keyword": 3
+  },
+  
+  "output_settings": {
+    "json_indent": 2,
+    "ensure_ascii": false
+  }
+}

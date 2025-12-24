@@ -79,7 +79,7 @@
    - 包含：直接答案、详细证据、精确引用
    - 补充说明其他相关信息
 
-## 使用方法
+## 快速开始
 
 ### 安装依赖
 
@@ -87,13 +87,31 @@
 pip install -r requirements.txt
 ```
 
-### 运行分析工具
+### 三种使用方式
+
+#### 1. 命令行工具（推荐）
+
+```bash
+# 查看文档信息
+python cli.py --info
+
+# 搜索关键词
+python cli.py --search "电池安全"
+
+# 提问
+python cli.py --question "机器人的尺寸限制是什么？"
+
+# 交互式模式
+python cli.py
+```
+
+#### 2. 直接运行分析器
 
 ```bash
 python document_analyzer.py
 ```
 
-### 使用示例
+#### 3. 作为Python模块使用
 
 ```python
 from document_analyzer import DocumentAnalyzer
@@ -111,6 +129,8 @@ answer = analyzer.analyze(question)
 # 查看结果
 print(answer)
 ```
+
+📚 **详细教程**: 请查看 [快速开始指南](QUICKSTART.md)
 
 ## 答案格式
 
@@ -147,6 +167,27 @@ print(answer)
 - **PDF处理**: PyMuPDF (fitz) / PyPDF2
 - **文本搜索**: 正则表达式 + 全文索引
 - **输出格式**: 结构化文本 + JSON
+
+## 文档导航
+
+- 📖 [快速开始指南](QUICKSTART.md) - 安装和基本使用
+- 📝 [使用示例](EXAMPLES.md) - 详细的代码示例
+- 🎯 [系统提示词](SYSTEM_PROMPT.md) - 系统设计原则和规则
+
+## 项目结构
+
+```
+.
+├── README.md                      # 项目说明
+├── QUICKSTART.md                  # 快速开始指南
+├── EXAMPLES.md                    # 使用示例
+├── SYSTEM_PROMPT.md               # 系统设计文档
+├── requirements.txt               # Python依赖
+├── document_analyzer.py           # 核心分析器
+├── cli.py                         # 命令行工具
+├── test_analyzer.py               # 测试脚本
+└── [PDF文件]                      # 三份规则文档
+```
 
 ## 贡献指南
 
