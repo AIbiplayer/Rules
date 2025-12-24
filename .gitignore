@@ -46,3 +46,4 @@ analysis_results.json
 /tmp/
 *.tmp
 *.bak
+analyze_jinqu_question.py
