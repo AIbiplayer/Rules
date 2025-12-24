@@ -9,8 +9,8 @@ File Content Analysis Expert System
 
 import os
 import re
-from typing import List, Dict, Tuple, Optional
 import json
+from typing import List, Dict, Tuple, Optional
 
 
 class DocumentAnalyzer:
@@ -24,7 +24,7 @@ class DocumentAnalyzer:
     4. 客观中立原则 - 保持客观
     """
     
-    def __init__(self):
+    def __init__(self, config_path: str = "config.json"):
         """初始化分析器"""
         self.documents = {}
         self.document_paths = [
@@ -33,6 +33,28 @@ class DocumentAnalyzer:
             "RoboMaster电池安全规范.pdf"
         ]
         self.text_cache = {}
+        self.config = self._load_config(config_path)
+        
+    def _load_config(self, config_path: str) -> Dict:
+        """加载配置文件"""
+        try:
+            if os.path.exists(config_path):
+                with open(config_path, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+        except Exception as e:
+            print(f"警告: 无法加载配置文件 {config_path}: {e}")
+        
+        # 返回默认配置
+        return {
+            "search_settings": {
+                "default_context_chars": 100,
+                "max_results_display": 5
+            },
+            "answer_format": {
+                "max_evidence_per_keyword": 3,
+                "max_paragraph_chars": 200
+            }
+        }
         
     def load_documents(self):
         """
@@ -140,6 +162,9 @@ class DocumentAnalyzer:
         """
         results = []
         
+        # 从配置获取上下文长度
+        context_chars = self.config.get("search_settings", {}).get("default_context_chars", 100)
+        
         flags = 0 if case_sensitive else re.IGNORECASE
         pattern = re.compile(re.escape(query), flags)
         
@@ -155,9 +180,9 @@ class DocumentAnalyzer:
                     start = match.start()
                     end = match.end()
                     
-                    # 提取上下文（前后各100个字符）
-                    context_start = max(0, start - 100)
-                    context_end = min(len(text), end + 100)
+                    # 提取上下文（使用配置的长度）
+                    context_start = max(0, start - context_chars)
+                    context_end = min(len(text), end + context_chars)
                     context = text[context_start:context_end]
                     
                     # 获取匹配所在的段落
@@ -287,10 +312,14 @@ class DocumentAnalyzer:
                     answer_parts.append(f"关键词：{keyword}")
                     answer_parts.append("-" * 60)
                     
-                    for result in results[:3]:  # 每个关键词最多显示3个结果
+                    # 从配置获取最大显示数量
+                    max_per_keyword = self.config.get("answer_format", {}).get("max_evidence_per_keyword", 3)
+                    max_paragraph_chars = self.config.get("answer_format", {}).get("max_paragraph_chars", 200)
+                    
+                    for result in results[:max_per_keyword]:  # 使用配置的最大值
                         answer_parts.append(f"{evidence_num}. 【{result['document']}：第{result['page']}页】")
                         answer_parts.append(f"   原文片段：")
-                        answer_parts.append(f"   \"{result['paragraph'][:200]}...\"")
+                        answer_parts.append(f"   \"{result['paragraph'][:max_paragraph_chars]}...\"")
                         answer_parts.append("")
                         evidence_num += 1
             

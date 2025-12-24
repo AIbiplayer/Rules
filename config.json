@@ -48,7 +48,8 @@
     "include_detailed_evidence": true,
     "include_supplementary_info": true,
     "include_source_citations": true,
-    "max_evidence_per_keyword": 3
+    "max_evidence_per_keyword": 3,
+    "max_paragraph_chars": 200
   },
   
   "output_settings": {

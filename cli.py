@@ -6,8 +6,10 @@
 """
 
 import argparse
-import sys
 import json
+import sys
+import traceback
+
 from document_analyzer import DocumentAnalyzer
 
 
@@ -264,6 +266,8 @@ def interactive_mode(analyzer):
             break
         except Exception as e:
             print(f"错误: {e}")
+            if args.verbose:
+                traceback.print_exc()
 
 
 def show_help():
@@ -299,3 +303,7 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("\n\n程序已中断")
         sys.exit(0)
+    except Exception as e:
+        print(f"\n严重错误: {e}")
+        traceback.print_exc()
+        sys.exit(1)
